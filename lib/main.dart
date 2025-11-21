@@ -1,3 +1,4 @@
+import 'package:bank_application/src/features/auth/presentation/pages/register/number_insert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,9 +8,9 @@ import 'src/features/transfers/transfers_screen.dart';
 import 'src/features/cards/cards_screen.dart';
 import 'src/features/payments/payments_screen.dart';
 import 'src/features/profile/profile_screen.dart';
-import 'src/features/auth/login_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'src/core/providers.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const ProviderScope(child: BankDemoApp()));
@@ -20,18 +21,29 @@ class BankDemoApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeCode = ref.watch(localeProvider);
+    final textTheme =
+        GoogleFonts.interTextTheme(ThemeData.light().textTheme);
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.cyan,
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.white,
+        textTheme: textTheme,
+        fontFamily: GoogleFonts.inter().fontFamily,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+        ),
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.cyan,
-      ),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       locale: Locale(localeCode),
       supportedLocales: const [Locale('en'), Locale('ru'), Locale('kk')],
       localizationsDelegates: const [
@@ -70,12 +82,11 @@ class _SplashScreenChooserState extends State<SplashScreenChooser> {
         if (snap.data!) {
           return const MainNavShell();
         } else {
-          return const LoginScreen();
+          return const NumberInsert();
         }
       },
     );
-  }
-}
+  }}
 
 class MainNavShell extends StatefulWidget {
   const MainNavShell({super.key});
