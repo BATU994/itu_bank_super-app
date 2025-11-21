@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class CodePage extends StatefulWidget {
-  const CodePage({super.key});
-
+  const CodePage({super.key, required this.number});
+  final String number;
   @override
   State<CodePage> createState() => _CodePageState();
 }
@@ -24,7 +24,7 @@ class _CodePageState extends State<CodePage> {
 
   @override
   Widget build(BuildContext context) {
-    final   defaultPinTheme = PinTheme(
+    final defaultPinTheme = PinTheme(
       width: 50,
       height: 60,
       decoration: BoxDecoration(
@@ -41,10 +41,7 @@ class _CodePageState extends State<CodePage> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Verification'),
-      ),
+      appBar: AppBar(centerTitle: true, title: Text('Verification')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -53,15 +50,14 @@ class _CodePageState extends State<CodePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                'Enter the 6-digit code sent to your phone.',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              SizedBox(height: 24),
+                    'Enter the 6-digit code sent to your phone.',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  SizedBox(height: 24),
                   Pinput(
                     controller: _pinController,
                     length: 6,
@@ -91,14 +87,15 @@ class _CodePageState extends State<CodePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (c) => const CreatePasswordPage(),
+                        builder: (c) =>
+                            CreatePasswordPage(number: widget.number),
                       ),
                     );
                   }
                 },
                 title: 'Verify',
                 backColor: Colors.blueAccent,
-              )
+              ),
             ],
           ),
         ),

@@ -3,8 +3,8 @@ import 'package:bank_application/src/features/auth/presentation/pages/register/a
 import 'package:flutter/material.dart';
 
 class CreatePasswordPage extends StatefulWidget {
-  const CreatePasswordPage({super.key});
-
+  const CreatePasswordPage({super.key, required this.number});
+  final String number;
   @override
   State<CreatePasswordPage> createState() => _CreatePasswordPageState();
 }
@@ -77,12 +77,20 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
                     FocusScope.of(context).unfocus();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddCardPage()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddCardPage(
+                          password: _confirmPasswordController.text,
+                          number: widget.number,
+                        ),
+                      ),
+                    );
                   }
                 },
                 title: 'Continue',
                 backColor: Colors.blueAccent,
-              )
+              ),
             ],
           ),
         ),
