@@ -60,7 +60,10 @@ class _NumberInsertState extends State<NumberInsert> {
                       if (_formKey.currentState?.validate() ?? false) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CodePage()),
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CodePage(number: "+7${numberController.text}"),
+                          ),
                         );
                       }
                     },
@@ -71,13 +74,15 @@ class _NumberInsertState extends State<NumberInsert> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
                       );
                     },
                     child: const Text('Уже есть аккаунт? Войти'),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
