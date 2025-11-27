@@ -51,6 +51,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get topUp => 'Пополнить';
 
   @override
+  String get investing => 'Инвестиции';
+
+  @override
+  String get noTransactions => 'Нету Переводов';
+
+  @override
   String get qrPay => 'QR Платеж';
 
   @override
@@ -80,6 +86,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get amount => 'Сумма';
+
+  @override
+  String get qrcode => 'Qrcode';
 
   @override
   String get send => 'Отправить';

@@ -1,0 +1,103 @@
+{
+  "stocks": [
+    {
+      "ticker": "KMGZ",
+      "company_name": "National Company KazMunayGas JSC",
+      "isin": "KZ1C00001122",
+      "price": 22445.0,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 0.11
+    },
+    {
+      "ticker": "KSPI",
+      "company_name": "Kaspi.kz JSC",
+      "isin": "KZ1C00001536",
+      "price": 38550.0,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": -2.89
+    },
+    {
+      "ticker": "KZAP",
+      "company_name": "National Atomic Company Kazatomprom JSC",
+      "isin": "KZ1C00001619",
+      "price": 27262.99,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": -2.6
+    },
+    {
+      "ticker": "HSBK",
+      "company_name": "Halyk Bank of Kazakhstan JSC",
+      "isin": "KZ000A0LE054",
+      "price": 330.59,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 0.68
+    },
+    {
+      "ticker": "CCBN",
+      "company_name": "Bank CenterCredit JSC",
+      "isin": "KZ0007786572",
+      "price": 4820.0,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 1.09
+    },
+    {
+      "ticker": "KCEL",
+      "company_name": "Keell JSC",
+      "isin": "KZ1C00000876",
+      "price": 3304.03,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 0.99
+    },
+    {
+      "ticker": "KZTK",
+      "company_name": "Kazakhtelecom JSC",
+      "isin": "KZ0009093241",
+      "price": 37374.99,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": -0.94
+    },
+    {
+      "ticker": "KEGC",
+      "company_name": "Kazakhstan Electricity Grid Operating Company JSC",
+      "isin": "KZ1C00000959",
+      "price": 1392.01,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 0.07
+    },
+    {
+      "ticker": "KZTO",
+      "company_name": "KazTransOil JSC",
+      "isin": "KZ1C00000744",
+      "price": 824.99,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 0.1
+    },
+    {
+      "ticker": "AIRA",
+      "company_name": "Air Astana JSC",
+      "isin": "KZ1C60000017",
+      "price": 756.69,
+      "currency": "KZT",
+      "date": "19.11.2025",
+      "change_percent": 0.89
+    },
+    {
+      "ticker": "KASE",
+      "company_name": "Kazakhstan Stock Exchange JSC",
+      "isin": "KZ1C00002070",
+      "price": 58100.0,
+      "currency": "KZT",
+      "date": "18.11.2025",
+      "change_percent": 0.0
+    }
+  ]
+}

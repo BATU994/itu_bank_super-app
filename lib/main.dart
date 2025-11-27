@@ -1,5 +1,6 @@
-import 'package:bank_application/src/features/auth/presentation/pages/register/number_insert.dart';
 import 'package:bank_application/src/features/card_func/data/models/transaction_model.dart';
+import 'package:bank_application/src/features/investing/presentation/pages/investing_page.dart';
+import 'package:bank_application/src/features/qr/qr_payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +13,6 @@ import 'src/features/profile/profile_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'src/core/providers.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -29,31 +29,22 @@ void main() async {
 
 class BankDemoApp extends ConsumerWidget {
   const BankDemoApp({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeCode = ref.watch(localeProvider);
-    final textTheme = GoogleFonts.interTextTheme(ThemeData.light().textTheme);
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.white,
-        textTheme: textTheme,
-        fontFamily: GoogleFonts.inter().fontFamily,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey,
-        ),
+        primarySwatch: Colors.cyan,
       ),
-      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.cyan,
+      ),
+      themeMode: ThemeMode.system,
       locale: Locale(localeCode),
       supportedLocales: const [Locale('en'), Locale('ru'), Locale('kk')],
       localizationsDelegates: const [
@@ -62,7 +53,7 @@ class BankDemoApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const SplashScreenChooser(),
+      home: MainNavShell(),
     );
   }
 }
@@ -92,7 +83,7 @@ class _SplashScreenChooserState extends State<SplashScreenChooser> {
         if (snap.data!) {
           return const MainNavShell();
         } else {
-          return const NumberInsert();
+          return const MainNavShell();
         }
       },
     );
@@ -113,6 +104,8 @@ class _MainNavShellState extends State<MainNavShell> {
     CardsScreen(),
     PaymentsScreen(),
     ProfileScreen(),
+    InvestingPage(),
+    QRScannerScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -143,6 +136,15 @@ class _MainNavShellState extends State<MainNavShell> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
             label: l10n.profile,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.qr_code_2),
+            label: l10n.qrcode,
+          ),
+
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.monetization_on_outlined),
+            label: l10n.investing,
           ),
         ],
       ),

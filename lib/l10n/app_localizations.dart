@@ -181,6 +181,18 @@ abstract class AppLocalizations {
   /// **'Top-up'**
   String get topUp;
 
+  /// No description provided for @investing.
+  ///
+  /// In en, this message translates to:
+  /// **'Investing'**
+  String get investing;
+
+  /// No description provided for @noTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'noTransactions'**
+  String get noTransactions;
+
   /// No description provided for @qrPay.
   ///
   /// In en, this message translates to:
@@ -234,6 +246,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount'**
   String get amount;
+
+  /// No description provided for @qrcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Qrcode'**
+  String get qrcode;
 
   /// No description provided for @send.
   ///

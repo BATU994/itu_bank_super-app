@@ -51,6 +51,12 @@ class AppLocalizationsKk extends AppLocalizations {
   String get topUp => 'Толықтыру';
 
   @override
+  String get investing => 'Инвестиции';
+
+  @override
+  String get noTransactions => 'Аудару жоқ';
+
+  @override
   String get qrPay => 'QR Төлем';
 
   @override
@@ -80,6 +86,9 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get amount => 'Сома';
+
+  @override
+  String get qrcode => 'Qrcode';
 
   @override
   String get send => 'Жіберу';

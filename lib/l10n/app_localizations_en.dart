@@ -51,6 +51,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topUp => 'Top-up';
 
   @override
+  String get investing => 'Investing';
+
+  @override
+  String get noTransactions => 'noTransactions';
+
+  @override
   String get qrPay => 'QR Pay';
 
   @override
@@ -80,6 +86,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get amount => 'Amount';
+
+  @override
+  String get qrcode => 'Qrcode';
 
   @override
   String get send => 'Send';
