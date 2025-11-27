@@ -42,6 +42,8 @@ class _AddCardPageState extends State<AddCardPage> {
               ),
               SizedBox(height: 24),
               ElevatedCustomButton(
+                backColor: Colors.blue,
+                title: 'click',
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
                     FocusScope.of(context).unfocus();
@@ -51,7 +53,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       int.parse(_cardNumberController.text),
                       _expiryDateController.text,
                       int.parse(_cvcController.text),
-                      100000
+                      100000,
                     );
                     Navigator.push(
                       context,
@@ -59,8 +61,6 @@ class _AddCardPageState extends State<AddCardPage> {
                     );
                   }
                 },
-                title: 'Add card',
-                backColor: Colors.blueAccent,
               ),
             ],
           ),

@@ -88,6 +88,9 @@ class AppLocalizationsKk extends AppLocalizations {
   String get amount => 'Сома';
 
   @override
+  String get qrcode => 'Qrcode';
+
+  @override
   String get send => 'Жіберу';
 
   @override

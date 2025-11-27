@@ -88,6 +88,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amount => 'Amount';
 
   @override
+  String get qrcode => 'Qrcode';
+
+  @override
   String get send => 'Send';
 
   @override

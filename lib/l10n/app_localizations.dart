@@ -247,6 +247,12 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get amount;
 
+  /// No description provided for @qrcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Qrcode'**
+  String get qrcode;
+
   /// No description provided for @send.
   ///
   /// In en, this message translates to:

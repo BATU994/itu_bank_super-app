@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadData() async {
     ProfileInfo prefs = ProfileInfo();
     userInfo = await prefs.getProfileInfo();
-    balance = await prefs.getMoney();
+    balance = 20;
     setState(() {});
   }
 
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 12),
               BalanceCard(
-                balance: balance.toString(),
+                balance: "20000",
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => InitPage()),
