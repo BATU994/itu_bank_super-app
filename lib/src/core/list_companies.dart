@@ -1,4 +1,4 @@
-{
+final Map companies = {
   "stocks": [
     {
       "ticker": "KMGZ",
@@ -7,7 +7,7 @@
       "price": 22445.0,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 0.11
+      "change_percent": 0.11,
     },
     {
       "ticker": "KSPI",
@@ -16,7 +16,7 @@
       "price": 38550.0,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": -2.89
+      "change_percent": -2.89,
     },
     {
       "ticker": "KZAP",
@@ -25,7 +25,7 @@
       "price": 27262.99,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": -2.6
+      "change_percent": -2.6,
     },
     {
       "ticker": "HSBK",
@@ -34,7 +34,7 @@
       "price": 330.59,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 0.68
+      "change_percent": 0.68,
     },
     {
       "ticker": "CCBN",
@@ -43,7 +43,7 @@
       "price": 4820.0,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 1.09
+      "change_percent": 1.09,
     },
     {
       "ticker": "KCEL",
@@ -52,7 +52,7 @@
       "price": 3304.03,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 0.99
+      "change_percent": 0.99,
     },
     {
       "ticker": "KZTK",
@@ -61,7 +61,7 @@
       "price": 37374.99,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": -0.94
+      "change_percent": -0.94,
     },
     {
       "ticker": "KEGC",
@@ -70,7 +70,7 @@
       "price": 1392.01,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 0.07
+      "change_percent": 0.07,
     },
     {
       "ticker": "KZTO",
@@ -79,7 +79,7 @@
       "price": 824.99,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 0.1
+      "change_percent": 0.1,
     },
     {
       "ticker": "AIRA",
@@ -88,7 +88,7 @@
       "price": 756.69,
       "currency": "KZT",
       "date": "19.11.2025",
-      "change_percent": 0.89
+      "change_percent": 0.89,
     },
     {
       "ticker": "KASE",
@@ -97,7 +97,7 @@
       "price": 58100.0,
       "currency": "KZT",
       "date": "18.11.2025",
-      "change_percent": 0.0
-    }
-  ]
-}
+      "change_percent": 0.0,
+    },
+  ],
+};

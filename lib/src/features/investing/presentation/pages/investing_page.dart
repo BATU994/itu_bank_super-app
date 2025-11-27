@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:bank_application/src/core/list_companies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/investment_detail_page.dart';
@@ -11,28 +11,6 @@ class InvestingPage extends StatefulWidget {
 }
 
 class _InvestingPageState extends State<InvestingPage> {
-  List<dynamic> companies = [];
-
-  Future<void> fetchData() async {
-    try {
-      final jsonStr = await rootBundle.loadString(
-        'assets/data/investment_companies_list.json',
-      );
-      final data = jsonDecode(jsonStr);
-      setState(() {
-        companies = data['stocks'];
-      });
-    } catch (e) {
-      print('Failed to load JSON: $e');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +19,7 @@ class _InvestingPageState extends State<InvestingPage> {
         backgroundColor: Colors.blueGrey.shade900,
       ),
       body: companies.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: Text('data'))
           : ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: companies.length,
