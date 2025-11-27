@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late UserModel userInfo;
-  late int balance;
+  final int balance = 20;
   @override
   void initState() {
     super.initState();
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadData() async {
     ProfileInfo prefs = ProfileInfo();
     userInfo = await prefs.getProfileInfo();
-    balance = 20;
+
     setState(() {});
   }
 

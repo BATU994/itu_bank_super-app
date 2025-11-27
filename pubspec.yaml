@@ -33,4 +33,3 @@ flutter:
   generate: true
   assets:
     - assets/page_image/
-    - assets/data/investment_companies_list.json

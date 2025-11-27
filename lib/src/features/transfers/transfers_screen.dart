@@ -1,5 +1,3 @@
-import 'package:bank_application/l10n/app_localizations.dart'
-    show AppLocalizations;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers.dart';
@@ -7,6 +5,7 @@ import '../../models/transaction.dart';
 
 class TransfersScreen extends ConsumerStatefulWidget {
   const TransfersScreen({super.key});
+
   @override
   ConsumerState<TransfersScreen> createState() => _TransfersScreenState();
 }
@@ -29,15 +28,12 @@ class _TransfersScreenState extends ConsumerState<TransfersScreen>
   }
 
   void _submit() async {
-    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _error = null;
       _isSending = true;
     });
     if (!(_formKey.currentState?.validate() ?? false)) {
-      setState(() {
-        _isSending = false;
-      });
+      setState(() => _isSending = false);
       return;
     }
     _formKey.currentState!.save();
@@ -45,16 +41,14 @@ class _TransfersScreenState extends ConsumerState<TransfersScreen>
     if (_amount > balance) {
       setState(() {
         _isSending = false;
-        _error = l10n.insufficientFunds;
+        _error = "Insufficient funds";
       });
       return;
     }
-    if (_amount > suspiciousLimit) {
-      setState(() {
-        _showSuspicious = true;
-      });
-    }
+    if (_amount > suspiciousLimit) _showSuspicious = true;
+
     await Future.delayed(const Duration(milliseconds: 700));
+
     ref.read(balanceProvider.notifier).state = balance - _amount;
     ref
         .read(transactionsProvider.notifier)
@@ -69,19 +63,18 @@ class _TransfersScreenState extends ConsumerState<TransfersScreen>
             description: 'Transfer to $_target',
           ),
         );
+
     if (mounted) {
-      setState(() {
-        _isSending = false;
-      });
+      setState(() => _isSending = false);
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: Text(l10n.success),
-          content: Text(l10n.transactionSuccess),
+          title: const Text('Success'),
+          content: const Text('Transaction completed successfully!'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(l10n.ok),
+              child: const Text('OK'),
             ),
           ],
         ),
@@ -92,25 +85,37 @@ class _TransfersScreenState extends ConsumerState<TransfersScreen>
   void _showAiAssistant(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (ctx) {
         final controller = TextEditingController();
         String reply = '';
         bool sent = false;
         return StatefulBuilder(
           builder: (context, setSheetState) => Padding(
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
                   "AI Payment Assistant",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.blue,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: controller,
-                  decoration: const InputDecoration(
-                    labelText: "Ask a question (e.g. 'How do transfers work?')",
+                  decoration: InputDecoration(
+                    labelText: "Ask me anything",
+                    prefixIcon: const Icon(Icons.question_mark),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                   onSubmitted: (_) async {
                     setSheetState(() => sent = true);
@@ -121,14 +126,17 @@ class _TransfersScreenState extends ConsumerState<TransfersScreen>
                     );
                   },
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 12),
                 if (sent && reply.isEmpty) const CircularProgressIndicator(),
                 if (reply.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Text(
                       reply,
-                      style: const TextStyle(color: Colors.blue),
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
               ],
@@ -141,86 +149,186 @@ class _TransfersScreenState extends ConsumerState<TransfersScreen>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final balance = ref.watch(balanceProvider);
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: Text(l10n.transfers),
+        title: const Text('Transfers'),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
-            Tab(text: l10n.toAccount),
-            Tab(text: l10n.toCard),
-            Tab(text: l10n.multiCurrency),
+          labelColor: Colors.blue,
+          unselectedLabelColor: Colors.grey,
+          indicatorColor: Colors.blue,
+          tabs: const [
+            Tab(text: "To Account"),
+            Tab(text: "To Card"),
+            Tab(text: "Multi-Currency"),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          if (_showSuspicious)
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            // Balance Card
             Container(
-              width: double.infinity,
-              color: Colors.orange.shade200,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Colors.blue, Colors.blueAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.warning, color: Colors.deepOrange),
-                  const SizedBox(width: 8),
-                  Expanded(child: Text('Suspicious activity detected')),
+                  const Icon(
+                    Icons.account_balance_wallet,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Text(
+                        "Total Balance",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      Text(
+                        '₸${balance.toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Text('${l10n.totalBalance}: ₸${balance.toStringAsFixed(0)}'),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: l10n.toAccount),
-                    onSaved: (v) => _target = v ?? '',
-                    validator: (v) =>
-                        (v == null || v.isEmpty) ? l10n.invalidInput : null,
+            const SizedBox(height: 20),
+
+            // Form Card
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
                   ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: l10n.amount),
-                    keyboardType: TextInputType.number,
-                    onSaved: (v) => _amount = double.tryParse(v ?? '0') ?? 0,
-                    validator: (v) => ((double.tryParse(v ?? '') ?? 0) <= 0)
-                        ? l10n.invalidInput
-                        : null,
-                  ),
-                  if (_error != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                ],
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Target Account",
+                        prefixIcon: const Icon(Icons.account_circle),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onSaved: (v) => _target = v ?? '',
+                      validator: (v) => (v == null || v.isEmpty)
+                          ? 'Enter valid account'
+                          : null,
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Amount",
+                        prefixIcon: const Icon(Icons.attach_money),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      onSaved: (v) => _amount = double.tryParse(v ?? '0') ?? 0,
+                      validator: (v) => ((double.tryParse(v ?? '') ?? 0) <= 0)
+                          ? 'Enter valid amount'
+                          : null,
+                    ),
+                    if (_error != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          _error!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    const SizedBox(height: 18),
+                    _isSending
+                        ? const CircularProgressIndicator()
+                        : SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                backgroundColor: Colors.blue,
+                              ),
+                              onPressed: _submit,
+                              child: const Text(
+                                "Send",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),
+            if (_showSuspicious)
+              Container(
+                margin: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.warning, color: Colors.deepOrange),
+                    SizedBox(width: 8),
+                    Expanded(
                       child: Text(
-                        _error!,
-                        style: const TextStyle(color: Colors.red),
+                        'Suspicious activity detected',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                  const SizedBox(height: 18),
-                  _isSending
-                      ? const CircularProgressIndicator()
-                      : SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _submit,
-                            child: Text(l10n.send),
-                          ),
-                        ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text('AI Assistant'),
-        icon: const Icon(Icons.smart_toy),
         onPressed: () => _showAiAssistant(context),
+        icon: const Icon(Icons.smart_toy),
+        label: const Text("AI Assistant"),
       ),
     );
   }
