@@ -13,6 +13,8 @@
   "totalBalance": "Total Balance",
   "transfer": "Transfer",
   "topUp": "Top-up",
+  "investing":"Investing",
+  "noTransactions":"noTransactions",
   "qrPay": "QR Pay",
   "recentTransactions": "Recent Transactions",
   "sentTo": "Sent to {name}",
