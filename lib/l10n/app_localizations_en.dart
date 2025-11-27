@@ -51,6 +51,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topUp => 'Top-up';
 
   @override
+  String get investing => 'Investing';
+
+  @override
+  String get noTransactions => 'noTransactions';
+
+  @override
   String get qrPay => 'QR Pay';
 
   @override

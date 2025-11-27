@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../models/user.dart';
 import '../models/card.dart';
 import '../models/transaction.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-final authProvider = StateProvider<bool>((ref) => false); // logged in status
+final authProvider = StateProvider<bool>((ref) => false);
 final userProvider = StateProvider<User?>((ref) => null);
 final balanceProvider = StateProvider<double>((ref) => 3450000);
 final transactionsProvider =
@@ -14,7 +15,9 @@ final transactionsProvider =
 final cardsProvider = StateNotifierProvider<CardsNotifier, List<BankCard>>(
   (ref) => CardsNotifier(),
 );
-final themeModeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
+final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>(
+  (ref) => ThemeModeNotifier(),
+);
 final localeProvider = StateProvider<String>((ref) => 'en');
 
 class TransactionsNotifier extends StateNotifier<List<BankTransaction>> {
@@ -59,5 +62,32 @@ class CardsNotifier extends StateNotifier<List<BankCard>> {
         else
           c,
     ];
+  }
+}
+
+class ThemeModeNotifier extends StateNotifier<ThemeMode> {
+  ThemeModeNotifier() : super(ThemeMode.system) {
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final themeString = prefs.getString('themeMode') ?? 'system';
+    switch (themeString) {
+      case 'light':
+        state = ThemeMode.light;
+        break;
+      case 'dark':
+        state = ThemeMode.dark;
+        break;
+      default:
+        state = ThemeMode.system;
+    }
+  }
+
+  void setTheme(ThemeMode mode) async {
+    state = mode;
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('themeMode', mode.name);
   }
 }

@@ -25,6 +25,7 @@ void main() async {
 
 class BankDemoApp extends ConsumerWidget {
   const BankDemoApp({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeCode = ref.watch(localeProvider);
@@ -34,22 +35,13 @@ class BankDemoApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.white,
-        textTheme: textTheme,
-        fontFamily: GoogleFonts.inter().fontFamily,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey,
-        ),
+        primarySwatch: Colors.cyan,
       ),
-      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.cyan,
+      ),
+      themeMode: ThemeMode.system,
       locale: Locale(localeCode),
       supportedLocales: const [Locale('en'), Locale('ru'), Locale('kk')],
       localizationsDelegates: const [
@@ -58,7 +50,7 @@ class BankDemoApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: const SplashScreenChooser(),
+      home: MainNavShell(),
     );
   }
 }
@@ -88,7 +80,7 @@ class _SplashScreenChooserState extends State<SplashScreenChooser> {
         if (snap.data!) {
           return const MainNavShell();
         } else {
-          return const NumberInsert();
+          return const MainNavShell();
         }
       },
     );
@@ -109,6 +101,7 @@ class _MainNavShellState extends State<MainNavShell> {
     CardsScreen(),
     PaymentsScreen(),
     ProfileScreen(),
+    InvestingPage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -139,6 +132,11 @@ class _MainNavShellState extends State<MainNavShell> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
             label: l10n.profile,
+          ),
+
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.monetization_on_outlined),
+            label: l10n.investing,
           ),
         ],
       ),
