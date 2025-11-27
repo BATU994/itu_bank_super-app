@@ -51,6 +51,7 @@ class _AddCardPageState extends State<AddCardPage> {
                       int.parse(_cardNumberController.text),
                       _expiryDateController.text,
                       int.parse(_cvcController.text),
+                      100000
                     );
                     Navigator.push(
                       context,

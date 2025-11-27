@@ -26,11 +26,13 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Image.asset(),
               Text(
                 'Create a secure password to protect your account.',
                 style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 24),
               _PasswordField(
@@ -121,7 +123,8 @@ class _PasswordField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
-        border: OutlineInputBorder(),
+
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         suffixIcon: IconButton(
           icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
           onPressed: onToggleVisibility,
