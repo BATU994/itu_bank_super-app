@@ -88,6 +88,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get amount => 'Сумма';
 
   @override
+  String get qrcode => 'Qrcode';
+
+  @override
   String get send => 'Отправить';
 
   @override

@@ -1,5 +1,6 @@
-import 'package:bank_application/src/features/auth/presentation/pages/register/number_insert.dart';
 import 'package:bank_application/src/features/card_func/data/models/transaction_model.dart';
+import 'package:bank_application/src/features/investing/presentation/pages/investing_page.dart';
+import 'package:bank_application/src/features/qr/qr_payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +13,6 @@ import 'src/features/profile/profile_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'src/core/providers.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -29,7 +29,6 @@ class BankDemoApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeCode = ref.watch(localeProvider);
-    final textTheme = GoogleFonts.interTextTheme(ThemeData.light().textTheme);
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       debugShowCheckedModeBanner: false,
@@ -102,6 +101,7 @@ class _MainNavShellState extends State<MainNavShell> {
     PaymentsScreen(),
     ProfileScreen(),
     InvestingPage(),
+    QRScannerScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -132,6 +132,10 @@ class _MainNavShellState extends State<MainNavShell> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
             label: l10n.profile,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.qr_code_2),
+            label: l10n.qrcode,
           ),
 
           BottomNavigationBarItem(

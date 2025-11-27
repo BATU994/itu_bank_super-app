@@ -33,6 +33,7 @@
   "cards": "Карты",
   "myCards": "Мои карты",
   "frozen": "Заморожена",
+   "qrcode":"Qrcode",
   "active": "Активна",
   "spendingLimit": "Лимит расходов",
   "expenseChart": "График расходов (демо)",

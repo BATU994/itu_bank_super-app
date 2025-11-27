@@ -24,6 +24,7 @@
   "toCard": "To Card",
   "multiCurrency": "Multi-currency",
   "amount": "Amount",
+  "qrcode":"Qrcode",
   "send": "Send",
   "payments": "Payments",
   "utilities": "Utilities",

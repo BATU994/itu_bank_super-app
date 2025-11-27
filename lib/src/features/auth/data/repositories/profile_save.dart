@@ -36,7 +36,7 @@ class ProfileInfo {
     await prefs.remove('password');
     await prefs.remove('cardNumber');
     await prefs.remove('cvc');
-    await prefs.remove('exDate'); 
+    await prefs.remove('exDate');
   }
 
   Future<UserModel> getProfileInfo() async {
