@@ -17,21 +17,30 @@ class FeatureTile extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 80,
+        margin: EdgeInsets.symmetric(horizontal: 16),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.green, // Changed to green
         ),
         child: Row(
           children: [
-            Container(height: 50, width: 50, color: Colors.black, child: icon),
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: icon,
+            ),
             SizedBox(width: 30),
             Text(
               featureText,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
-                color: Colors.black,
+                color: Colors.white, // Changed to white
               ),
             ),
           ],

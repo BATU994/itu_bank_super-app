@@ -39,47 +39,56 @@ class _InitPageState extends State<InitPage> {
         children: [
           BalanceCard(balance: balance.toString(), onTap: null),
           SizedBox(height: 20),
-          Container(
-            color: Colors.white,
-            height: double.maxFinite, 
-            width: double.infinity,
-            child: Column(
-              children: [
-                FeatureTile(
-                  icon: Icon(
-                    Icons.compare_arrows_outlined,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  featureText: "Транзакции",
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Transaction()),
-                  ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
                 ),
-                FeatureTile(    
-                  icon: Icon(
-                    Icons.account_balance_outlined,
-                    color: Colors.white,
-                    size: 30,
+              ),
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 20),
+              child: Column(
+                children: [
+                  FeatureTile(
+                    icon: Icon(
+                      Icons.compare_arrows_outlined,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    featureText: "Транзакции",
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Transaction()),
+                    ),
                   ),
-                  featureText: "Оплатить гос.услуги",
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  SizedBox(height: 12),
+                  FeatureTile(
+                    icon: Icon(
+                      Icons.account_balance_outlined,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    featureText: "Оплатить гос.услуги",
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    ),
                   ),
-                ),
-                FeatureTile(
-                  icon: Icon(Icons.history_edu, color: Colors.white, size: 30),
-                  featureText: "История",
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => History()),
+                  SizedBox(height: 12),
+                  FeatureTile(
+                    icon: Icon(Icons.history_edu, color: Colors.white, size: 30),
+                    featureText: "История",
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => History()),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
