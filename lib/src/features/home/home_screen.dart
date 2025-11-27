@@ -1,8 +1,12 @@
 import 'package:bank_application/src/features/auth/data/modules/userModel.dart';
 import 'package:bank_application/src/features/auth/data/repositories/profile_save.dart';
+import 'package:bank_application/src/features/card_func/data/models/transaction_model.dart';
 import 'package:bank_application/src/features/card_func/pages/init_page.dart';
+import 'package:bank_application/src/features/card_func/pages/transaction.dart';
 import 'package:bank_application/src/features/home/widgets/balance_card.dart';
+import 'package:bank_application/src/features/qr/qr_payment_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,10 +56,18 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 22),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  _ShortcutButton(icon: Icons.send, label: 'Transfer'),
-                  _ShortcutButton(icon: Icons.phone_iphone, label: 'Top-up'),
-                  _ShortcutButton(icon: Icons.qr_code, label: 'QR Pay'),
+                children: [
+                  GestureDetector(
+                    onTap: () => Transaction(),
+                    child: _ShortcutButton(icon: Icons.send, label: 'Transfer'),
+                  ),
+                  GestureDetector(
+                    onTap: () => QRScannerScreen(),
+                    child: _ShortcutButton(
+                      icon: Icons.qr_code,
+                      label: 'QR Pay',
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 30),
@@ -65,19 +77,50 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 8),
               Expanded(
-                child: ListView(
-                  children: const [
-                    ListTile(
-                      leading: Icon(Icons.arrow_upward, color: Colors.red),
-                      title: Text('Sent to John'),
-                      trailing: Text('- 20 000 ₸'),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.arrow_downward, color: Colors.green),
-                      title: Text('Received from Anna'),
-                      trailing: Text('+ 85 000 ₸'),
-                    ),
-                  ],
+                child: ValueListenableBuilder(
+                  valueListenable: Hive.box<TransactionModel>(
+                    'transactions',
+                  ).listenable(),
+                  builder: (context, Box<TransactionModel> box, _) {
+                    if (box.isEmpty) {
+                      return Center(child: Text('No transactions yet'));
+                    }
+
+                    // Get transactions and reverse to show newest first
+                    final transactions = box.values.toList().reversed.toList();
+
+                    return ListView.builder(
+                      itemCount: transactions.length,
+                      itemBuilder: (context, index) {
+                        final tx = transactions[index];
+                        final isReceived =
+                            tx.receiver16 == userInfo.cardNumber.toString();
+
+                        return ListTile(
+                          leading: Icon(
+                            isReceived
+                                ? Icons.arrow_downward
+                                : Icons.arrow_upward,
+                            color: isReceived ? Colors.green : Colors.red,
+                          ),
+                          title: Text(
+                            tx.description ??
+                                (isReceived ? 'Received' : 'Sent'),
+                          ),
+                          subtitle: Text(
+                            '${tx.timestamp.day}/${tx.timestamp.month}/${tx.timestamp.year}',
+                          ),
+                          trailing: Text(
+                            '${isReceived ? '+' : '-'} ${tx.amount.toStringAsFixed(0)} ₸',
+                            style: TextStyle(
+                              color: isReceived ? Colors.green : Colors.red,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ],
