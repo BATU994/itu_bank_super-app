@@ -3,7 +3,7 @@ import 'package:bank_application/src/features/auth/data/repositories/profile_sav
 import 'package:bank_application/src/features/card_func/pages/history.dart';
 import 'package:bank_application/src/features/card_func/pages/transaction.dart';
 import 'package:bank_application/src/features/card_func/widgets/init_page/feature_tile.dart';
-import 'package:bank_application/src/features/home/home_screen.dart';
+import 'package:bank_application/src/features/gosuslugi/gos_usligi_page.dart';
 import 'package:bank_application/src/features/home/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class InitPage extends StatefulWidget {
 
 class _InitPageState extends State<InitPage> {
   late UserModel userInfo;
-  late int balance;
+  final int balance = 20000;
   @override
   void initState() {
     super.initState();
@@ -25,7 +25,6 @@ class _InitPageState extends State<InitPage> {
 
   Future<void> _loadData() async {
     userInfo = await ProfileInfo().getProfileInfo();
-    balance = await ProfileInfo().getMoney();
 
     setState(() {});
   }
@@ -41,7 +40,7 @@ class _InitPageState extends State<InitPage> {
           SizedBox(height: 20),
           Container(
             color: Colors.white,
-            height: double.maxFinite, 
+            height: double.maxFinite,
             width: double.infinity,
             child: Column(
               children: [
@@ -57,7 +56,7 @@ class _InitPageState extends State<InitPage> {
                     MaterialPageRoute(builder: (context) => Transaction()),
                   ),
                 ),
-                FeatureTile(    
+                FeatureTile(
                   icon: Icon(
                     Icons.account_balance_outlined,
                     color: Colors.white,
@@ -66,7 +65,7 @@ class _InitPageState extends State<InitPage> {
                   featureText: "Оплатить гос.услуги",
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => GovServicesPage()),
                   ),
                 ),
                 FeatureTile(
