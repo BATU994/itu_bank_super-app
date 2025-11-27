@@ -33,3 +33,4 @@ flutter:
   generate: true
   assets:
     - assets/page_image/
+    - assets/images/

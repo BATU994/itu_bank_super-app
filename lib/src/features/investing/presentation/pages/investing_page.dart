@@ -1,7 +1,6 @@
-import 'package:bank_application/src/core/list_companies.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../widgets/investment_detail_page.dart';
+import 'package:bank_application/src/core/list_companies.dart';
 
 class InvestingPage extends StatefulWidget {
   const InvestingPage({super.key});
@@ -19,7 +18,7 @@ class _InvestingPageState extends State<InvestingPage> {
         backgroundColor: Colors.blueGrey.shade900,
       ),
       body: companies.isEmpty
-          ? const Center(child: Text('data'))
+          ? const Center(child: Text('No companies available'))
           : ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: companies.length,
@@ -27,12 +26,13 @@ class _InvestingPageState extends State<InvestingPage> {
                 final company = companies[index];
                 final change = company['change_percent'] as double;
                 final isPositive = change >= 0;
+
                 return Card(
                   margin: const EdgeInsets.only(bottom: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  elevation: 3,
+                  elevation: 4,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12),
                     onTap: () {
@@ -51,13 +51,18 @@ class _InvestingPageState extends State<InvestingPage> {
                           CircleAvatar(
                             radius: 30,
                             backgroundColor: Colors.blueGrey.shade50,
-                            child: Text(
-                              company['ticker'][0],
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            backgroundImage: company['image'] != null
+                                ? NetworkImage(company['image'])
+                                : null,
+                            child: company['image'] == null
+                                ? Text(
+                                    company['ticker'][0],
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : null,
                           ),
                           const SizedBox(width: 16),
                           Expanded(
@@ -70,6 +75,7 @@ class _InvestingPageState extends State<InvestingPage> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
@@ -81,7 +87,7 @@ class _InvestingPageState extends State<InvestingPage> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  '${company['price'].toString()} ${company['currency']}',
+                                  '${company['price'].toStringAsFixed(2)} ${company['currency']}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -110,6 +116,14 @@ class _InvestingPageState extends State<InvestingPage> {
                                   color: Colors.grey.shade500,
                                 ),
                               ),
+                              const SizedBox(height: 4),
+                              Icon(
+                                isPositive
+                                    ? Icons.arrow_upward
+                                    : Icons.arrow_downward,
+                                color: isPositive ? Colors.green : Colors.red,
+                                size: 18,
+                              ),
                             ],
                           ),
                         ],
@@ -119,6 +133,13 @@ class _InvestingPageState extends State<InvestingPage> {
                 );
               },
             ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueGrey.shade900,
+        child: const Icon(Icons.refresh),
+        onPressed: () {
+          print(companies[0]['change_percent']);
+        },
+      ),
     );
   }
 }
