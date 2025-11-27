@@ -51,6 +51,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get topUp => 'Пополнить';
 
   @override
+  String get investing => 'Инвестиции';
+
+  @override
+  String get noTransactions => 'Нету Переводов';
+
+  @override
   String get qrPay => 'QR Платеж';
 
   @override

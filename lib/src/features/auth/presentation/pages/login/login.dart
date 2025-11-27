@@ -25,10 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Вход'),
-      ),
+      appBar: AppBar(centerTitle: true, title: const Text('Вход')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -41,22 +38,23 @@ class _LoginPageState extends State<LoginPage> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 24),
-              NumberField(numberField: _phoneController, validator:(value) {
-                if (value == null || value.isEmpty) {
+              NumberField(
+                numberField: _phoneController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
                     return 'Введите номер телефона';
                   }
                   if (!RegExp(r'^\d{10}$').hasMatch(value)) {
                     return 'Номер должен содержать 10 цифр';
                   }
                   return null;
-              }),
+                },
+              ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Пароль',
-                ),
+                decoration: const InputDecoration(labelText: 'Пароль'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Введите пароль';
@@ -75,7 +73,10 @@ class _LoginPageState extends State<LoginPage> {
                       const SnackBar(content: Text('Вход выполнен')),
                     );
                   }
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainNavShell()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainNavShell()),
+                  );
                 },
                 title: 'Войти',
                 backColor: Colors.blueAccent,
