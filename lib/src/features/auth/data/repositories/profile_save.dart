@@ -8,6 +8,7 @@ class ProfileInfo {
     int cardNumber,
     String exDate,
     int cvc,
+    int money,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('number', number);
@@ -15,6 +16,18 @@ class ProfileInfo {
     await prefs.setInt('cardNumber', cardNumber);
     await prefs.setInt('cvc', cvc);
     await prefs.setString('exDate', exDate);
+    await prefs.setInt('money', money);
+  }
+
+  Future<void> changeMoney(int money) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('money', money);
+  }
+
+  Future<int> getMoney() async {
+    final prefs = await SharedPreferences.getInstance();
+    int money = prefs.getInt("money")!;
+    return money;
   }
 
   Future<void> deleteInfo() async {
@@ -23,7 +36,7 @@ class ProfileInfo {
     await prefs.remove('password');
     await prefs.remove('cardNumber');
     await prefs.remove('cvc');
-    await prefs.remove('exDate');
+    await prefs.remove('exDate'); 
   }
 
   Future<UserModel> getProfileInfo() async {
