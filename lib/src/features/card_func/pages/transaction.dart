@@ -17,6 +17,7 @@ class _TransactionState extends State<Transaction> {
   final TextEditingController _cardNumberController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   late int balance;
+  late String cardDisplay;
   @override
   void initState() {
     super.initState();
@@ -27,27 +28,36 @@ class _TransactionState extends State<Transaction> {
     ProfileInfo prefs = ProfileInfo();
     userInfo = await prefs.getProfileInfo();
     balance = await prefs.getMoney();
+    if (mounted) {
+      cardDisplay = userInfo.cardNumber.toString().replaceRange(0, 12, '····');
+    }
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Send to card')),
+      backgroundColor: Colors.grey.shade300,
+      appBar: AppBar(title: Text('Send to card'), centerTitle: true),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
+              color: Colors.white,
+            ),
             child: Container(
               padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
+              decoration: BoxDecoration(  
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    userInfo.cardNumber.toString(),
+                    cardDisplay,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   Text(balance.toString()),
@@ -57,6 +67,11 @@ class _TransactionState extends State<Transaction> {
           ),
           SizedBox(height: 15),
           Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+            ),
+
             padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,10 +79,12 @@ class _TransactionState extends State<Transaction> {
                 Form(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Enter the card number',
                         style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.start,
                       ),
                       SizedBox(height: 10),
                       TextFormField(
@@ -107,6 +124,12 @@ class _TransactionState extends State<Transaction> {
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(double.infinity, 70),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
                             final prefs = ProfileInfo();
@@ -119,15 +142,13 @@ class _TransactionState extends State<Transaction> {
                             final tx = TransactionModel(
                               id: DateTime.now().millisecondsSinceEpoch
                                   .toString(),
-                              sender16: userInfo.cardNumber
-                                  .toString(),
-                              receiver16: _cardNumberController.text
-                                  .trim(),
+                              sender16: userInfo.cardNumber.toString(),
+                              receiver16: _cardNumberController.text.trim(),
                               amount: amount.toDouble(),
                               timestamp: DateTime.now(),
                               description:
                                   "Transfer to ${_cardNumberController.text}",
-                            );
+                            ); 
                             await box.add(tx);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

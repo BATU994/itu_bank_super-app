@@ -18,6 +18,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  
+  // Register the adapter BEFORE opening the box
+  Hive.registerAdapter(TransactionModelAdapter());
+  
   await Hive.openBox<TransactionModel>('transactions');
 
   runApp(const ProviderScope(child: BankDemoApp()));
