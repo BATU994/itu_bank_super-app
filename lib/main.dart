@@ -1,4 +1,5 @@
-import 'package:bank_application/src/features/investing/presentation/pages/investing_page.dart';
+import 'package:bank_application/src/features/auth/presentation/pages/register/number_insert.dart';
+import 'package:bank_application/src/features/card_func/data/models/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,8 +11,15 @@ import 'src/features/payments/payments_screen.dart';
 import 'src/features/profile/profile_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'src/core/providers.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox<TransactionModel>('transactions');
+
   runApp(const ProviderScope(child: BankDemoApp()));
 }
 
@@ -21,6 +29,7 @@ class BankDemoApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeCode = ref.watch(localeProvider);
+    final textTheme = GoogleFonts.interTextTheme(ThemeData.light().textTheme);
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       debugShowCheckedModeBanner: false,

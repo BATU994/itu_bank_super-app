@@ -1,5 +1,9 @@
 import 'package:bank_application/src/features/auth/data/modules/userModel.dart';
 import 'package:bank_application/src/features/auth/data/repositories/profile_save.dart';
+import 'package:bank_application/src/features/card_func/pages/history.dart';
+import 'package:bank_application/src/features/card_func/pages/transaction.dart';
+import 'package:bank_application/src/features/card_func/widgets/init_page/feature_tile.dart';
+import 'package:bank_application/src/features/home/home_screen.dart';
 import 'package:bank_application/src/features/home/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +15,8 @@ class InitPage extends StatefulWidget {
 }
 
 class _InitPageState extends State<InitPage> {
+  late UserModel userInfo;
+  late int balance;
   @override
   void initState() {
     super.initState();
@@ -18,16 +24,63 @@ class _InitPageState extends State<InitPage> {
   }
 
   Future<void> _loadData() async {
-    UserModel userInfo = await ProfileInfo().getProfileInfo();
-    int balance = await ProfileInfo().getMoney();
+    userInfo = await ProfileInfo().getProfileInfo();
+    balance = await ProfileInfo().getMoney();
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(title: const Text('Card')),
       body: Column(
-        children: const [BalanceCard(balance: "1000", onTap: onTap)],
+        children: [
+          BalanceCard(balance: balance.toString(), onTap: null),
+          SizedBox(height: 20),
+          Container(
+            color: Colors.white,
+            height: double.maxFinite, 
+            width: double.infinity,
+            child: Column(
+              children: [
+                FeatureTile(
+                  icon: Icon(
+                    Icons.compare_arrows_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  featureText: "Транзакции",
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Transaction()),
+                  ),
+                ),
+                FeatureTile(    
+                  icon: Icon(
+                    Icons.account_balance_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  featureText: "Оплатить гос.услуги",
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  ),
+                ),
+                FeatureTile(
+                  icon: Icon(Icons.history_edu, color: Colors.white, size: 30),
+                  featureText: "История",
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => History()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
