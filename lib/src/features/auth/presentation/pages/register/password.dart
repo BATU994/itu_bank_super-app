@@ -28,7 +28,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(),
+              Image.asset('assets/page_image/lock_image.webp', height: 200),
               Text(
                 'Create a secure password to protect your account.',
                 style: Theme.of(context).textTheme.titleMedium,
