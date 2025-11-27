@@ -4,6 +4,7 @@ import 'package:bank_application/src/features/card_func/pages/history.dart';
 import 'package:bank_application/src/features/card_func/pages/transaction.dart';
 import 'package:bank_application/src/features/card_func/widgets/init_page/feature_tile.dart';
 import 'package:bank_application/src/features/gosuslugi/gos_usligi_page.dart';
+import 'package:bank_application/src/features/home/home_screen.dart';
 import 'package:bank_application/src/features/home/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
 
@@ -42,9 +43,7 @@ class _InitPageState extends State<InitPage> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
               width: double.infinity,
               padding: EdgeInsets.only(top: 20),
@@ -77,7 +76,11 @@ class _InitPageState extends State<InitPage> {
                   ),
                   SizedBox(height: 12),
                   FeatureTile(
-                    icon: Icon(Icons.history_edu, color: Colors.white, size: 30),
+                    icon: Icon(
+                      Icons.history_edu,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                     featureText: "История",
                     onTap: () => Navigator.push(
                       context,
@@ -87,7 +90,7 @@ class _InitPageState extends State<InitPage> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
